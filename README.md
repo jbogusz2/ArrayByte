@@ -1,18 +1,16 @@
-Shifty
+ArrayByte
 ======
-A Flexible 74HC595 Manager for Arduino
---------------------------------------
+Flexible data type for unsigned types with array accessor for bit manipulation
+------------------------------------------------------------------------------
 
-The Shifty library for Arduino is a very flexible way to manage 74HC595 shift registers.  It allows you to write to individual outputs just like "digitalWrite", allows you to daisy-chain shift registers together, and, if you wire it according to the instructions in this document, allows you to use your shift register for *both* input *and* output pins with only one additional pin used.  This makes it ideal for usage with an ATTiny, though it does use up a bit of space on the device.
+The ArrayByte library for Arduino is a very flexible way to manipulate bits in unsigned data types.  It allows all the normal operations plus the array operator to manipulate individual bits.
 
 ### Inspiration
 
-This is inspired first by the ATTiny85, which is a very awesome, if limiting, chip to work with.  Shift registers are almost required to do anything fancy with the ATTiny85.  However, a shift register eats up almost all of the pins, making input difficult.  Then I stumbled upon Kevin Darrah's video on how to use output shift registers for reading inputs.  The problem was that the code was very obscure.  Therefore, I decided to write a library that encapsulates these ideas into an easy-to-use form.
-
+THe need for more than 8 bits for a bank of shift registers.  Yes, you can use an array of bytes, but is becomes tedious to manage.
 
 ### Basic Usage
 
-If you have a single shift register with data on pin 11, clock on pin 12, and latch on pin 8, a simple program to blink Q3 on the register would look like this:
 
     Shifty myreg;
 
