@@ -7,7 +7,7 @@ The ArrayByte library for Arduino is a very flexible way to manipulate bits in u
 
 ### Inspiration
 
-The need for more than 8 bits for a bank of shift registers.  Yes, you can use an array of bytes, but is becomes tedious to manage having to calculate banks and bits.
+The need for more than 8 bits for a bank of shift registers.  Yes, you can use an array of bytes, but is becomes tedious to manage and track banks and bits.  See AAShifterEx for an shift out library using ArrayByte.
 
 ### Basic Usage
 
