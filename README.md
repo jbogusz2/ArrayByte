@@ -3,7 +3,7 @@ ArrayByte
 Flexible data type for unsigned types with array accessors for bit manipulation
 ------------------------------------------------------------------------------
 
-The ArrayByte library for Arduino is a very flexible way to manipulate bits in unsigned data types.  It allows all the normal operations plus the array operator to manipulate individual bits.
+The C++ ArrayByte library for Arduino is a very flexible way to manipulate bits in unsigned data types.  It allows all the normal operations plus the array operator to manipulate individual bits.
 
 ### Inspiration
 
