@@ -1,91 +1,56 @@
 ArrayByte
 ======
-Flexible data type for unsigned types with array accessor for bit manipulation
+Flexible data type for unsigned types with array accessors for bit manipulation
 ------------------------------------------------------------------------------
 
 The ArrayByte library for Arduino is a very flexible way to manipulate bits in unsigned data types.  It allows all the normal operations plus the array operator to manipulate individual bits.
 
 ### Inspiration
 
-THe need for more than 8 bits for a bank of shift registers.  Yes, you can use an array of bytes, but is becomes tedious to manage.
+The need for more than 8 bits for a bank of shift registers.  Yes, you can use an array of bytes, but is becomes tedious to manage having to calculate banks and bits.
 
 ### Basic Usage
 
-
-    Shifty myreg;
-
-    void setup() {
-      myreg.setBitCount(8);
-      myreg.setPins(11, 12, 8);
-    }
-
-    void loop() {
-      myreg.writeBit(3, HIGH);
-      delay(500);
-      myreg.writeBit(3, LOW);
-      delay(500);
-    }
-
-### Batch Mode
-
-In order to make reading/writing bits on your shift register simpler, Shifty buffers your output, and then rewrites all your output every time you set a bit.  However, if you wanted to speed this up, you can wrap a number of bit sets into a single batch:
-
-    void loop() {
-      myreg.batchWriteBegin();
-      myreg.writeBit(3, HIGH);
-      myreg.writeBit(4, LOW);
-      myreg.writeBit(5, HIGH);
-      myreg.writeBit(8, LOW);
-      myreg.batchWriteEnd();
-    }
-
-This sets the bits on Q3, Q4, Q5, and Q8, but doesn't push the results out until you give a batchWriteEnd() command.
-
-### Daisy-chaining Shift Registers Together
-
-Additionally, if you daisy-chain two 74HC595's together, you can use the same library, just set it to have 16 bits instead of 8:
-
-    Shifty myreg;
-
-    void setup() {
-      myreg.setBitCount(16);
-      myreg.setPins(11, 12, 8);
-    }
-
-You can have as many 74HC595's linked together as you wish, barring electrical issues.  Technically, the library limits you to 16, but that is easy enough to change.  However, with more shift registers, the time it takes to push out the results increases.  For every batchWriteEnd() (or every single writeBit if you are not in a batch) it has to write to *every* shift register bit.
-
-### Input Pins
-
-Using an output shift register for input was inspired by this YouTube video by Kevin Darrah:
-
-http://www.youtube.com/watch?v=nXl4fb_LbcI
-
-Note that the input is still under active development and may or may not be functional at the moment.
-
-Here is how the API is setup to use.  First of all, this requires the usage of a single input pin to receive input feedback.  Therefore, setPins() requires an extra argument - the last number will be the pin used for the input channel.  Additionally, each bit that you plan to use for input needs to be marked with bitMode().
-
-    Shifty myreg;
-    void setup() {
-      myreg.setBitCount(8);
-      myreg.setPins(11, 12, 8, 9);
-      myreg.bitMode(4, INPUT);
-      myreg.bitMode(6, INPUT);
-    }
-
-This sets up Q4 and Q6 on the chip to be used as input bits.  Note that the register itself does not support input, instead you have to wire it as mentioned below (or in the video) to get it to be used as an input bit.  In short, what happens is that the "input" bit is set to HIGH, and we then check to see if we can read the HIGH signal on the input pin to see the state of that particular pin.
-
-Reading pins this was is slow, but the ATTiny is fast enough that it usually doesn't matter.
-
-So, to read pins, do:
-
-    void loop() {
-      if(myreg.readBit(4) == HIGH) {
-        myreg.writeBit(5, HIGH);
-      } else { 
-        myreg.writeBit(5, LOW);
-      }
-    }
-
-### Wiring Your Project for Shift Register Inputs
-
-Fixme - need to write this.
+	An ArrayByte can be of types:
+		8 bits  - unsigned char, byte, uint8_t
+		16 bits - unsigned short
+		16 or 32 bits - unsigned int  (depending on implementation)
+		32 bits - unsigned long
+		
+	Declaration:
+		ArrayByte<unsigned char> ucArrayByte   = ArrayByte<unsigned char>(0x00);
+		ArrayByte<byte> byArrayByte            = ArrayByte<byte>(0x00);
+		ArrayByte<uint8_t> u8tArrayByte        = ArrayByte<uint8_t>(0x00);
+		ArrayByte<unsigned short> usArrayByte  = ArrayByte<unsigned short>(0x00);
+		ArrayByte<unsigned int> uiArrayByte    = ArrayByte<unsigned int>(0x4EA);
+		ArrayByte<unsigned long> ulArrayByte   = ArrayByte<unsigned long>(0x00);
+		
+		Can be declared unassigned:
+			ArrayByte<unsigned char> ab = ArrayByte<unsigned char>();
+			
+	Assignment:
+		ucArrayByte  = 0x55;
+		u8tArrayByte = 0xAA;
+		bytArrayByte = 0x80;
+		usArrayByte  = 0x5500
+		ulArrayByte  = 0x55000000;
+		
+	Assigning:  ArrayByte acts like its data type
+		ArrayByte<unsigned short> ui = ArrayByte<unsigned short>(0x8080);
+		unsigned short tmp = ui;	// tmp = 0x8080
+	
+	Array access is boolean
+		ucArrayByte[3] = true;	// set bit 3
+		ucArrayByte[3] = false;	// clear bit 3
+		
+### Operators
+    
+	Assignment        =
+	Arithmetic        +, +=, - , -=, *, *=, /, /=
+	Bitwise		      &, |, ^, !
+	Logical           &&, ||, %
+	Unary		      ++, --  pre and post
+	Comparison        ==, <, <=, >, >=, !=
+	Shift             <<, <<=, >>, >>=
+	Array subscript   []
+	Ones complement   ~

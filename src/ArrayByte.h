@@ -152,7 +152,21 @@ public:
 		return *this;
 	}
 
+	// ------------------------------------------------
+	// MODULUS
 
+	ArrayByte<T> operator%(T val) const
+	{
+		ArrayByte<T> tmp(*this);
+		tmp.bits = tmp.bits % val;
+		return tmp;
+	}
+
+	ArrayByte<T>& operator%=(T val)
+	{
+		bits = bits % val;
+		return *this;
+	}
 
 	// ------------------------------------------------
 	// SHIFT RIGHT
@@ -196,17 +210,17 @@ public:
 	// ------------------------------------------------
 	// ADDITION
 
-	ArrayByte<T>& operator+=(const T val)
+	/*ArrayByte<T>& operator+=(const T val)
 	{
 		bits += val;
 		return *this;
-	}
+	}*/
 
-	ArrayByte<T>& operator+=(const ArrayByte<T> &val)
+	/*ArrayByte<T>& operator+=(const ArrayByte<T> &val)
 	{
 		bits += val;
 		return *this;
-	}
+	}*/
 
 	T operator+(T val);
 	
@@ -222,6 +236,14 @@ public:
 	// ------------------------------------------------
 	// SUBTRACTION
 
+	/*ArrayByte<T>& operator-(const ArrayByte<T> &val)
+	{
+		ArrayByte<T> tmp = val;
+
+		tmp -= val;
+
+		return tmp;
+	}*/
 
 	T operator-(T val)
 	{
@@ -232,11 +254,11 @@ public:
 		return tmp;
 	}
 
-	ArrayByte<T>& operator-=(const ArrayByte<T> &val)
+	/*ArrayByte<T>& operator-=(const ArrayByte<T> &val)
 	{
 		bits -= val;
 		return *this;
-	}
+	}*/
 
 	ArrayByte<T>& operator-=(T val)
 	{
@@ -321,10 +343,11 @@ public:
 	}
 };
 
-// DEFINED REQUIRED TEMPLATES
+// DEFINED AVAILABLE TEMPLATES
 
 template class ArrayByte<uint8_t>;
 template class ArrayByte<unsigned char>;
+template class ArrayByte<unsigned short>;
 template class ArrayByte<unsigned int>;
 template class ArrayByte<unsigned long>;
 
