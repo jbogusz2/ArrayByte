@@ -47,9 +47,9 @@ The need for more than 8 bits for a bank of shift registers.  Yes, you can use a
     
 	Assignment        =
 	Arithmetic        +, +=, - , -=, *, *=, /, /=
-	Bitwise		      &, |, ^, !
+	Bitwise           &, |, ^, !
 	Logical           &&, ||, %
-	Unary		      ++, --  pre and post
+	Unary             ++, --  pre and post
 	Comparison        ==, <, <=, >, >=, !=
 	Shift             <<, <<=, >>, >>=
 	Array subscript   []
